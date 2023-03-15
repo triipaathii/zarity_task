@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^4.0.3
   flutter_launcher_icons: ^0.12.0
   percent_indicator: ^4.2.3
+  firebase_core: ^2.7.1
+  cloud_firestore: ^4.4.4
 
 flutter_icons:
   android: "launcher_icon"

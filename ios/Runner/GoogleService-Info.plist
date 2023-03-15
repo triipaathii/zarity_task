@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>951844918461-cgk87877qagrteb811vvnh79k67bktos.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.951844918461-cgk87877qagrteb811vvnh79k67bktos</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCZX2aRwtQQvKlGXdcOd5yGg0FKB5-OwkE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>951844918461</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.zarityTask</string>
+	<key>PROJECT_ID</key>
+	<string>zarity-intern</string>
+	<key>STORAGE_BUCKET</key>
+	<string>zarity-intern.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:951844918461:ios:0ef0b7fd6187af788d13d4</string>
+</dict>
+</plist>
