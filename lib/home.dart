@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:zarity_task/service_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,25 +18,30 @@ class _HomeState extends State<Home> {
     {
       'name': 'Consult',
       'icon_address': "https://cdn-icons-png.flaticon.com/512/7858/7858230.png",
-      'image_address': "https://static.wixstatic.com/media/ff34f6_f6be6373c94c45a388fe6bd66a9d9409~mv2.png/v1/crop/x_0,y_60,w_2000,h_1881/fill/w_503,h_473,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Medical%20prescription-zarity.png",
+      'image_address':
+          "https://static.wixstatic.com/media/ff34f6_f6be6373c94c45a388fe6bd66a9d9409~mv2.png/v1/crop/x_0,y_60,w_2000,h_1881/fill/w_503,h_473,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Medical%20prescription-zarity.png",
       'description': "Speak to a doctor who's not in a rush.Your first "
-                     "consultation at zarity is different. They are ~30 minutes"
-                     " long, so you get enough time to ask your questions, and "
-                     "the doctor gets time to look at your health history.",
+          "consultation at zarity is different. They are ~30 minutes"
+          " long, so you get enough time to ask your questions, and "
+          "the doctor gets time to look at your health history.",
       'fees': 500,
     },
     {
-      'name': "Mental Health",
+      'name': "Mental\nHealth",
       'icon_address': "https://cdn-icons-png.flaticon.com/512/2036/2036943.png",
-      'image_address': "https://static.wixstatic.com/media/ff34f6_2525755f76d44a8280f204b217bf5801~mv2.png/v1/crop/x_275,y_0,w_1450,h_2000/fill/w_380,h_524,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Baseline%20consultation-zarity.png",
-      'description': "Speak to a clinical therapist who offers therapy/medication for your stress/anxiety concerns, connecting it to your overall health.",
+      'image_address':
+          "https://static.wixstatic.com/media/ff34f6_2525755f76d44a8280f204b217bf5801~mv2.png/v1/crop/x_275,y_0,w_1450,h_2000/fill/w_380,h_524,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Baseline%20consultation-zarity.png",
+      'description':
+          "Speak to a clinical therapist who offers therapy/medication for your stress/anxiety concerns, connecting it to your overall health.",
       'fees': 200
     },
     {
       'name': "Nutrition",
-      'icon_address': "https://cdn-icons-png.flaticon.com/512/2036/2036943.png",
-      'image_address': "https://static.wixstatic.com/media/ff34f6_bb48d8436b92468ca884e98f69d4565a~mv2.png/v1/fill/w_490,h_398,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/ff34f6_bb48d8436b92468ca884e98f69d4565a~mv2.png",
-      'description': "Talk to our expert clinical nutritionists - who consider your biochemical data (lab reports) to provide diet & lifestyle guidance. They work along with our doctors & understand your long-term health.",
+      'icon_address': "https://cdn-icons-png.flaticon.com/512/8662/8662440.png",
+      'image_address':
+          "https://static.wixstatic.com/media/ff34f6_bb48d8436b92468ca884e98f69d4565a~mv2.png/v1/fill/w_490,h_398,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_auto/ff34f6_bb48d8436b92468ca884e98f69d4565a~mv2.png",
+      'description':
+          "Talk to our expert clinical nutritionists - who consider your biochemical data (lab reports) to provide diet & lifestyle guidance. They work along with our doctors & understand your long-term health.",
       'fees': 200
     }
   ];
@@ -148,9 +154,47 @@ class _HomeState extends State<Home> {
                   fontSize: 16,
                   color: Colors.white),
             ),
-            Row(
-              children: [Container()],
-            )
+            SizedBox(height: height * 0.02),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              for (var service in services) ...[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ServicePage(
+                                  service: service,
+                                )));
+                  },
+                  child: Container(
+                    width: width * 0.29,
+                    height: height * 0.18,
+                    decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Hero(
+                          tag: "${service['name']}",
+                          child: Image.network(
+                            "${service['image_address']}",
+                            height: height * 0.07,
+                          ),
+                        ),
+                        SizedBox(
+                          height: height * 0.015,
+                        ),
+                        Text(
+                          "${service['name']}".toUpperCase(),
+                          style: GoogleFonts.outfit(color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ])
           ],
         ),
       ),
