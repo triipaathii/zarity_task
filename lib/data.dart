@@ -67,3 +67,41 @@ List<Map<String, Object>> doctors = [
         "https://static.wixstatic.com/media/ff34f6_fea5de8750d640b899b13950aaed428e~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
   },
 ];
+
+List<Map<String, Object>> futureServices = [
+  {
+    'name': "Blood Tests",
+    'image_address':
+        "https://static.wixstatic.com/media/ff34f6_1a9f8a4528334cbca40bd21151c6d77e~mv2.png/v1/fill/w_50,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/nutritient%20Imbalance%20analysis.png",
+    'description':
+        "Need to get your cholesterol, Vitamin B12 or Liver Function tests? We enable at-home sample collection for most lab-tests"
+  },
+  {
+    'name': "Digestive Issues",
+    'image_address':
+        "https://static.wixstatic.com/media/ff34f6_ebf07efe248445c3960ead4d8c9b1b86~mv2.png/v1/fill/w_50,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/nutritient%20Imbalance%20analysis.png",
+    'description':
+        "Frequent Acidity, Bloating or having troubles with motion? Our experts help find the root cause and devise a care plan to make your gut feel better."
+  },
+  {
+    'name': "Energy Dip",
+    'image_address':
+        "https://static.wixstatic.com/media/ff34f6_f5db3034c39c4a689f5fa211126c54ac~mv2.png/v1/fill/w_50,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/nutritient%20Imbalance%20analysis.png",
+    'description':
+        "Feeling a dip in your energy levels during the day or waking up feeling tired? We check for your deficiencies, analyse your total health for issues and get you back up on those energy levels."
+  },
+  {
+    'name': "Sleep Trouble",
+    'image_address':
+        "https://static.wixstatic.com/media/ff34f6_41e1c9213ee64a09bc32a6f23c50c543~mv2.png/v1/fill/w_50,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/nutritient%20Imbalance%20analysis.png",
+    'description':
+        "Trouble sleeping, waking up frequently, or sleeping too much? We'll look at your health in detail to analyze changes - to help you get back to your sleep routine.",
+  },
+  {
+    'name': "Seasonal Allergies",
+    'image_address':
+        "https://static.wixstatic.com/media/ff34f6_c4d016b282a64a51ac0a086df381c965~mv2.png/v1/fill/w_50,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/nutritient%20Imbalance%20analysis.png",
+    'description':
+        "Allergies causing cold,runny nose, itchy eyes making it difficult to work? We help you manage the symptoms and build a care plan to helps you build immunity."
+  }
+];

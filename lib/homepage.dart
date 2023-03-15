@@ -38,7 +38,8 @@ class _HomepageState extends State<Homepage> {
           child: Container(
             height: height * 0.13,
             decoration: BoxDecoration(
-                color: secondaryColor, borderRadius: BorderRadius.circular(20)),
+                color: const Color(0xff2E2C71),
+                borderRadius: BorderRadius.circular(20)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

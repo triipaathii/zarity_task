@@ -22,6 +22,8 @@ class _HomeState extends State<Home> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
+    bool viewMoreFutureServices = false;
+
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: width * 0.03),
@@ -253,12 +255,126 @@ class _HomeState extends State<Home> {
                     separatorBuilder: (context, _) {
                       return Divider(
                         color: primaryColor,
-                        thickness: 3 ,
+                        thickness: 3,
                       );
                     },
                     itemCount: doctors.length)),
             SizedBox(
-              height: height * 0.1,
+              height: height * 0.05,
+            ),
+            StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                decoration: BoxDecoration(
+                    color: secondaryColor,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.05, vertical: height * 0.01),
+                      child: Text(
+                        "Future Services",
+                        style: GoogleFonts.outfit(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white),
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: width * 0.035, vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    "${futureServices[index]['image_address']}",
+                                    height: height * 0.08,
+                                    width: height * 0.08,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * 0.03,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${futureServices[index]['name']}",
+                                        style: GoogleFonts.outfit(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: height * 0.01,
+                                      ),
+                                      Text(
+                                        "${futureServices[index]['description']}",
+                                        softWrap: false,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.outfit(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, _) {
+                          return Divider(
+                            color: primaryColor,
+                            thickness: 3,
+                          );
+                        },
+                        itemCount:
+                            viewMoreFutureServices ? futureServices.length : 3),
+                    Divider(
+                      color: primaryColor,
+                      thickness: 3,
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              viewMoreFutureServices = !viewMoreFutureServices;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff1051E3),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(100))),
+                          child: Text(
+                            viewMoreFutureServices ? "View less" : "View More",
+                            style: GoogleFonts.outfit(color: Colors.white),
+                          )),
+                    )
+                  ],
+                ),
+              );
+            }),
+            SizedBox(
+              height: height * 0.05,
             ),
           ],
         ),
