@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DoctorPage extends StatelessWidget {
-  Map<String, dynamic> doctor;
+  var doctor;
   DoctorPage({super.key, required this.doctor});
 
   final primaryColor = const Color(0xff02012d);

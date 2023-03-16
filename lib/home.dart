@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:zarity_task/doctor_page.dart';
 import 'package:zarity_task/service_page.dart';
+import 'package:zarity_task/settings.dart';
 
 import 'data.dart';
 
@@ -25,8 +25,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-
-    bool viewMoreFutureServices = false;
 
     return isLoading
         ? const Center(
@@ -51,12 +49,20 @@ class _HomeState extends State<Home> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: Image.asset(
-                              "assets/images/anurag.jpg",
-                              height: height * 0.055,
-                              width: height * 0.055,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Profile()));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.asset(
+                                "assets/images/anurag.jpg",
+                                height: height * 0.055,
+                                width: height * 0.055,
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -268,8 +274,7 @@ class _HomeState extends State<Home> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       DoctorPage(
-                                                        doctor: doctor as Map<
-                                                            String, dynamic>,
+                                                        doctor: doctor,
                                                       )));
                                         },
                                         style: ElevatedButton.styleFrom(
