@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -18,45 +19,7 @@ class _HomeState extends State<Home> {
   final primaryColor = const Color(0xff02012d);
   final secondaryColor = const Color(0xff1b2152);
 
-  final db = FirebaseFirestore.instance;
-  // List<Map<String, dynamic>> doctors = [];
-  // List<Map<String, dynamic>> futureServices = [];
-
   bool isLoading = false;
-
-  // Future<void> _getData() async {
-  //   await db.collection('doctors').get().then((value) {
-  //     for (var doctor in value.docs) {
-  //       print("${doctor.id} => ${doctor.data()}");
-  //       setState(() {
-  //         doctors.add(doctor as Map<String, dynamic>);
-  //       });
-  //       print(doctors);
-  //     }
-  //   });
-
-  //   await db.collection('futureServices').get().then((value) {
-  //     for (var service in value.docs) {
-  //       print("${service.id} => ${service.data()}");
-  //       setState(() {
-  //         futureServices.add(service as Map<String, dynamic>);
-  //       });
-  //       print(doctors);
-  //     }
-  //   });
-
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   _getData();
-
-  //   // TODO: implement initState
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -232,88 +195,189 @@ class _HomeState extends State<Home> {
                       decoration: BoxDecoration(
                           color: secondaryColor,
                           borderRadius: BorderRadius.circular(20)),
-                      child: ListView.separated(
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width * 0.035, vertical: 5),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          "${doctors[index]['image_address']}",
-                                          height: height * 0.08,
-                                          width: height * 0.08,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.03,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${doctors[index]['name']}",
-                                            style: GoogleFonts.outfit(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: height * 0.005,
-                                          ),
-                                          Text(
-                                            "${doctors[index]['post']}",
-                                            style: GoogleFonts.outfit(
-                                                color: Colors.white,
-                                                fontSize: 12),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DoctorPage(
-                                                      doctor: doctors[index],
-                                                    )));
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              const Color(0xff1051E3),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(100))),
-                                      child: Text(
-                                        "View",
-                                        style: GoogleFonts.outfit(
-                                            color: Colors.white),
-                                      ))
-                                ],
+                      child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('doctors')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
                               ),
                             );
-                          },
-                          separatorBuilder: (context, _) {
-                            return Divider(
-                              color: primaryColor,
-                              thickness: 3,
-                            );
-                          },
-                          itemCount: doctors.length)),
+                          }
+
+                          return ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: snapshot.data!.docs.map((doctor) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: width * 0.035, vertical: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.network(
+                                            "${doctor['image_address']}",
+                                            height: height * 0.08,
+                                            width: height * 0.08,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.03,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${doctor['name']}",
+                                              style: GoogleFonts.outfit(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: height * 0.005,
+                                            ),
+                                            Text(
+                                              "${doctor['post']}",
+                                              style: GoogleFonts.outfit(
+                                                  color: Colors.white,
+                                                  fontSize: 12),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DoctorPage(
+                                                        doctor: doctor as Map<
+                                                            String, dynamic>,
+                                                      )));
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                const Color(0xff1051E3),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        100))),
+                                        child: Text(
+                                          "View",
+                                          style: GoogleFonts.outfit(
+                                              color: Colors.white),
+                                        ))
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          );
+
+                          // return ListView.separated(
+                          //     physics: const NeverScrollableScrollPhysics(),
+                          //     padding: EdgeInsets.zero,
+                          //     shrinkWrap: true,
+                          //     itemBuilder: (context, index) {
+                          //       return Padding(
+                          //         padding: EdgeInsets.symmetric(
+                          //             horizontal: width * 0.035, vertical: 5),
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: [
+                          //             Row(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.start,
+                          //               children: [
+                          //                 ClipRRect(
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(20),
+                          //                   child: Image.network(
+                          //                     "${doctors[index]['image_address']}",
+                          //                     height: height * 0.08,
+                          //                     width: height * 0.08,
+                          //                   ),
+                          //                 ),
+                          //                 SizedBox(
+                          //                   width: width * 0.03,
+                          //                 ),
+                          //                 Column(
+                          //                   crossAxisAlignment:
+                          //                       CrossAxisAlignment.start,
+                          //                   children: [
+                          //                     Text(
+                          //                       "${doctors[index]['name']}",
+                          //                       style: GoogleFonts.outfit(
+                          //                         color: Colors.white,
+                          //                         fontWeight: FontWeight.bold,
+                          //                       ),
+                          //                     ),
+                          //                     SizedBox(
+                          //                       height: height * 0.005,
+                          //                     ),
+                          //                     Text(
+                          //                       "${doctors[index]['post']}",
+                          //                       style: GoogleFonts.outfit(
+                          //                           color: Colors.white,
+                          //                           fontSize: 12),
+                          //                     ),
+                          //                   ],
+                          //                 )
+                          //               ],
+                          //             ),
+                          //             ElevatedButton(
+                          //                 onPressed: () {
+                          //                   Navigator.push(
+                          //                       context,
+                          //                       MaterialPageRoute(
+                          //                           builder: (context) =>
+                          //                               DoctorPage(
+                          //                                 doctor:
+                          //                                     doctors[index],
+                          //                               )));
+                          //                 },
+                          //                 style: ElevatedButton.styleFrom(
+                          //                     backgroundColor:
+                          //                         const Color(0xff1051E3),
+                          //                     shape: RoundedRectangleBorder(
+                          //                         borderRadius:
+                          //                             BorderRadius.circular(
+                          //                                 100))),
+                          //                 child: Text(
+                          //                   "View",
+                          //                   style: GoogleFonts.outfit(
+                          //                       color: Colors.white),
+                          //                 ))
+                          //           ],
+                          //         ),
+                          //       );
+                          //     },
+                          //     separatorBuilder: (context, _) {
+                          //       return Divider(
+                          //         color: primaryColor,
+                          //         thickness: 3,
+                          //       );
+                          //     },
+                          //     itemCount: doctors.length);
+                        },
+                      )),
                   SizedBox(
                     height: height * 0.05,
                   ),
@@ -342,96 +406,169 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             height: height * 0.01,
                           ),
-                          ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: width * 0.035, vertical: 5),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          "${futureServices[index]['image_address']}",
-                                          height: height * 0.08,
-                                          width: height * 0.08,
-                                        ),
+                          StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection('futureServices')
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  );
+                                }
+
+                                return ListView(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  children:
+                                      snapshot.data!.docs.map((futureService) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: width * 0.035,
+                                          vertical: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Image.network(
+                                              "${futureService['image_address']}",
+                                              height: height * 0.08,
+                                              width: height * 0.08,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.03,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "${futureService['name']}",
+                                                  style: GoogleFonts.outfit(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: height * 0.01,
+                                                ),
+                                                Text(
+                                                  "${futureService['description']}",
+                                                  softWrap: false,
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: GoogleFonts.outfit(
+                                                      color: Colors.white,
+                                                      fontSize: 12),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: width * 0.03,
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${futureServices[index]['name']}",
-                                              style: GoogleFonts.outfit(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: height * 0.01,
-                                            ),
-                                            Text(
-                                              "${futureServices[index]['description']}",
-                                              softWrap: false,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: GoogleFonts.outfit(
-                                                  color: Colors.white,
-                                                  fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    );
+                                  }).toList(),
                                 );
-                              },
-                              separatorBuilder: (context, _) {
-                                return Divider(
-                                  color: primaryColor,
-                                  thickness: 3,
-                                );
-                              },
-                              itemCount: viewMoreFutureServices
-                                  ? futureServices.length
-                                  : 3),
-                          Divider(
-                            color: primaryColor,
-                            thickness: 3,
-                          ),
-                          SizedBox(
-                            height: height * 0.01,
-                          ),
-                          Center(
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
-                                    viewMoreFutureServices =
-                                        !viewMoreFutureServices;
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xff1051E3),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100))),
-                                child: Text(
-                                  viewMoreFutureServices
-                                      ? "View less"
-                                      : "View More",
-                                  style:
-                                      GoogleFonts.outfit(color: Colors.white),
-                                )),
-                          )
+                              }),
+                          // ListView.separated(
+                          //     physics: const NeverScrollableScrollPhysics(),
+                          //     padding: EdgeInsets.zero,
+                          //     shrinkWrap: true,
+                          //     itemBuilder: (context, index) {
+                          //       return Padding(
+                          //         padding: EdgeInsets.symmetric(
+                          //             horizontal: width * 0.035, vertical: 5),
+                          //         child: Row(
+                          //           mainAxisAlignment: MainAxisAlignment.start,
+                          //           children: [
+                          //             ClipRRect(
+                          //               borderRadius: BorderRadius.circular(20),
+                          //               child: Image.network(
+                          //                 "${futureServices[index]['image_address']}",
+                          //                 height: height * 0.08,
+                          //                 width: height * 0.08,
+                          //               ),
+                          //             ),
+                          //             SizedBox(
+                          //               width: width * 0.03,
+                          //             ),
+                          //             Expanded(
+                          //               child: Column(
+                          //                 crossAxisAlignment:
+                          //                     CrossAxisAlignment.start,
+                          //                 children: [
+                          //                   Text(
+                          //                     "${futureServices[index]['name']}",
+                          //                     style: GoogleFonts.outfit(
+                          //                       color: Colors.white,
+                          //                       fontWeight: FontWeight.bold,
+                          //                     ),
+                          //                   ),
+                          //                   SizedBox(
+                          //                     height: height * 0.01,
+                          //                   ),
+                          //                   Text(
+                          //                     "${futureServices[index]['description']}",
+                          //                     softWrap: false,
+                          //                     maxLines: 2,
+                          //                     overflow: TextOverflow.ellipsis,
+                          //                     style: GoogleFonts.outfit(
+                          //                         color: Colors.white,
+                          //                         fontSize: 12),
+                          //                   ),
+                          //                 ],
+                          //               ),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       );
+                          //     },
+                          //     separatorBuilder: (context, _) {
+                          //       return Divider(
+                          //         color: primaryColor,
+                          //         thickness: 3,
+                          //       );
+                          //     },
+                          //     itemCount: viewMoreFutureServices
+                          //         ? futureServices.length
+                          //         : 3),
+                          // Divider(
+                          //   color: primaryColor,
+                          //   thickness: 3,
+                          // ),
+                          // SizedBox(
+                          //   height: height * 0.01,
+                          // ),
+                          // Center(
+                          //   child: ElevatedButton(
+                          //       onPressed: () {
+                          //         setState(() {
+                          //           viewMoreFutureServices =
+                          //               !viewMoreFutureServices;
+                          //         });
+                          //       },
+                          //       style: ElevatedButton.styleFrom(
+                          //           backgroundColor: const Color(0xff1051E3),
+                          //           shape: RoundedRectangleBorder(
+                          //               borderRadius:
+                          //                   BorderRadius.circular(100))),
+                          //       child: Text(
+                          //         viewMoreFutureServices
+                          //             ? "View less"
+                          //             : "View More",
+                          //         style:
+                          //             GoogleFonts.outfit(color: Colors.white),
+                          //       )),
+                          // )
                         ],
                       ),
                     );

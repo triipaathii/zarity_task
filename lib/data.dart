@@ -30,43 +30,43 @@ List<Map<String, Object>> services = [
   }
 ];
 
-List<Map<String, Object>> doctors = [
-  {
-    'name': "Dr. Jyoti Mannari",
-    'post': "Advisor, Clinincal Programs",
-    'degree': "MD",
-    'about': "Associate Dean & Professor of Medicine,Karamsad Medical College",
-    'image_address':
-        "https://static.wixstatic.com/media/ff34f6_3ba9fd5e091a486e8a720152ee2ce028~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
-  },
-  {
-    'name': "Dr. V.A. Srinivasan",
-    'post': "Scientific Advisor",
-    'degree': "PhD",
-    'about':
-        "Former Research & Executive Director,Indian Immunologicals Limited",
-    'image_address':
-        "https://static.wixstatic.com/media/ff34f6_55cb444051cf4060a98729352045c23a~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
-  },
-  {
-    'name': "Dr. G.K Sharma",
-    'post': "Scientific Advisor",
-    'degree': "MVSc",
-    'about':
-        "Former Scientist & General Manager,National Dairy Development Board",
-    'image_address':
-        "https://static.wixstatic.com/media/ff34f6_cb9efbee70844588a28009f16ad5826d~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
-  },
-  {
-    'name': "Dr. Sunny Mishra",
-    'post': "Advisor, Health Ops",
-    'degree': "MD, MRCR (U.K)",
-    'about':
-        "M.D. (Radiodiagnosis),MRCR, Former Senior Resident, Sion Hospital, Mumbai",
-    'image_address':
-        "https://static.wixstatic.com/media/ff34f6_fea5de8750d640b899b13950aaed428e~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
-  },
-];
+// List<Map<String, Object>> doctors = [
+//   {
+//     'name': "Dr. Jyoti Mannari",
+//     'post': "Advisor, Clinincal Programs",
+//     'degree': "MD",
+//     'about': "Associate Dean & Professor of Medicine,Karamsad Medical College",
+//     'image_address':
+//         "https://static.wixstatic.com/media/ff34f6_3ba9fd5e091a486e8a720152ee2ce028~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
+//   },
+//   {
+//     'name': "Dr. V.A. Srinivasan",
+//     'post': "Scientific Advisor",
+//     'degree': "PhD",
+//     'about':
+//         "Former Research & Executive Director,Indian Immunologicals Limited",
+//     'image_address':
+//         "https://static.wixstatic.com/media/ff34f6_55cb444051cf4060a98729352045c23a~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
+//   },
+//   {
+//     'name': "Dr. G.K Sharma",
+//     'post': "Scientific Advisor",
+//     'degree': "MVSc",
+//     'about':
+//         "Former Scientist & General Manager,National Dairy Development Board",
+//     'image_address':
+//         "https://static.wixstatic.com/media/ff34f6_cb9efbee70844588a28009f16ad5826d~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
+//   },
+//   {
+//     'name': "Dr. Sunny Mishra",
+//     'post': "Advisor, Health Ops",
+//     'degree': "MD, MRCR (U.K)",
+//     'about':
+//         "M.D. (Radiodiagnosis),MRCR, Former Senior Resident, Sion Hospital, Mumbai",
+//     'image_address':
+//         "https://static.wixstatic.com/media/ff34f6_fea5de8750d640b899b13950aaed428e~mv2.jpg/v1/fill/w_269,h_280,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/IMG_2698.jpg"
+//   },
+// ];
 
 List<Map<String, Object>> futureServices = [
   {
